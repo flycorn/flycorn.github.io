@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://flycorn.com/"/>
   <updated>2017-01-11T07:30:33.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://flycorn.com/</id>
   
   <author>
     <name>Flycorn</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello Blog</title>
-    <link href="http://yoursite.com/2017/01/10/Hello%20Blog/"/>
-    <id>http://yoursite.com/2017/01/10/Hello Blog/</id>
+    <link href="http://flycorn.com/2017/01/10/Hello%20Blog/"/>
+    <id>http://flycorn.com/2017/01/10/Hello Blog/</id>
     <published>2017-01-10T06:47:22.000Z</published>
     <updated>2017-01-11T07:30:33.000Z</updated>
     
@@ -35,7 +35,7 @@
     </summary>
     
     
-      <category term="Blog" scheme="http://yoursite.com/tags/Blog/"/>
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
