@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Flycorn&#39;s Blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-01-10T06:48:25.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Flycorn</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Test</title>
+    <link href="http://yoursite.com/2017/01/10/Test/"/>
+    <id>http://yoursite.com/2017/01/10/Test/</id>
+    <published>2017-01-10T06:47:22.000Z</published>
+    <updated>2017-01-10T06:48:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>###Test测试中</p>
+<p>  hello world….</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###Test测试中&lt;/p&gt;
+&lt;p&gt;  hello world….&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
