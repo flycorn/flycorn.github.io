@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-18T06:18:17.000Z</updated>
+  <updated>2017-01-18T08:18:40.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -16,11 +16,92 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hexo博客其他功能项配置</title>
+    <link href="http://flycorn.com/2017/01/18/Hexo%E5%8D%9A%E5%AE%A2%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD%E9%A1%B9%E9%85%8D%E7%BD%AE/"/>
+    <id>http://flycorn.com/2017/01/18/Hexo博客其他功能项配置/</id>
+    <published>2017-01-18T08:17:54.000Z</published>
+    <updated>2017-01-18T08:18:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、配置导航"><a href="#1、配置导航" class="headerlink" title="1、配置导航"></a>1、配置导航</h2><pre><code>//进入对应主题的配置文件
+//如：blog/themes/next/_config.yml
+</code></pre><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#找回menu配置项（按照自己的需求添加或修改）</div><div class="line">menu:</div><div class="line">  home: /  #首页</div><div class="line">  archives: /archives  #归档页</div><div class="line">  #sitemap: /sitemap.xml</div><div class="line">  #commonweal: /404.html</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="2、标签页"><a href="#2、标签页" class="headerlink" title="2、标签页"></a>2、标签页</h2><pre><code>//生成标签页
+hexo new page tags
+//此时blog/source/目录下会生成 tags/index.md
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//配置index.md</div><div class="line">---</div><div class="line">title: Tagcloud</div><div class="line">date: 2017-01-11 15:23:30</div><div class="line">type: &quot;tags&quot;</div><div class="line">---</div><div class="line">```    </div><div class="line">    </div><div class="line">    //添加标签页导航</div><div class="line">    vim blog/themes/next/_config.yml</div><div class="line">    </div><div class="line">```html</div><div class="line">#找到menu配置项（按照添加tags）</div><div class="line">menu:</div><div class="line">  home: /  #首页</div><div class="line">  archives: /archives  #归档页</div><div class="line">  tags: tags  #标签页</div><div class="line">  #sitemap: /sitemap.xml</div><div class="line">  #commonweal: /404.html</div></pre></td></tr></table></figure>
+<p><strong>PS：文章添加标签如下：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">title: Hexo+Github搭建个人Blog</div><div class="line">date: 2017-01-11 15:40:26</div><div class="line">tags: [Hexo,Github,Blog]  #只有1个标签可用（tags: Hexo）</div><div class="line">---</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="3、404页"><a href="#3、404页" class="headerlink" title="3、404页"></a>3、404页</h2><pre><code>cd blog/source/
+//将准备好的404.html页面放入此目录
+</code></pre><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 404.html</div><div class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>404 - Flycorn's Blog<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">"404错误，页面不存在！"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8;"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge,chrome=1"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"all"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"index,follow"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"http://www.qq.com/404/search_children.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> <span class="attr">homepageurl</span>=<span class="string">"/"</span> <span class="attr">homepagename</span>=<span class="string">"回到Blog"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="4、分类页"><a href="#4、分类页" class="headerlink" title="4、分类页"></a>4、分类页</h2><pre><code>//生成分类页
+hexo new page categories
+//此时blog/source/目录下会生成 categories/index.md
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//配置index.md</div><div class="line">---</div><div class="line">title: 分类</div><div class="line">date: 2017-01-18 12:04:11</div><div class="line">type: categories</div><div class="line">---</div><div class="line">```    </div><div class="line">    </div><div class="line">    //添加分类页导航</div><div class="line">    vim blog/themes/next/_config.yml</div><div class="line">    </div><div class="line">```html</div><div class="line">#找到menu配置项（按照添加categories）</div><div class="line">menu:</div><div class="line">  home: /</div><div class="line">  categories: /categories</div><div class="line">  about: /about</div><div class="line">  archives: /archives</div><div class="line">  tags: /tags</div><div class="line">  #sitemap: /sitemap.xml</div><div class="line">  #commonweal: /404.html</div></pre></td></tr></table></figure>
+<p><strong>PS：文章添加分类如下：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">title: Hexo+Github搭建个人Blog</div><div class="line">date: 2017-01-11 15:40:26</div><div class="line">tags: [Hexo,Github,Blog]  #只有1个标签可用（tags: Hexo）</div><div class="line">categories: 学习笔记</div><div class="line">---</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="5、多说评论模块"><a href="#5、多说评论模块" class="headerlink" title="5、多说评论模块"></a>5、多说评论模块</h2><blockquote>
+<p>以<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next</a>主题为例！</p>
+</blockquote>
+<pre><code>1、注册[多说](http://duoshuo.com/)
+
+2、登录后在首页选择 “我要安装”。
+
+3、创建站点，填写表单。多说域名 这一栏填写的即是你的 duoshuo_shortname
+
+4、创建站点完成后在 站点配置文件 中新增 duoshuo_shortname 字段，值设置成上一步中的值（如：flycorn）。
+</code></pre><hr>
+<h2 id="6、友情链接"><a href="#6、友情链接" class="headerlink" title="6、友情链接"></a>6、友情链接</h2><blockquote>
+<p>以<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next</a>主题为例！</p>
+</blockquote>
+<pre><code>//编辑主题配置
+vim blog/themes/next/_config.yml
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 找到 social 选项，配置外链</div><div class="line">social:</div><div class="line">  GitHub: https://github.com/flycorn</div><div class="line">  简书: http://www.jianshu.com/u/d3b9df1ce6d9</div><div class="line"></div><div class="line">#配置外链图标</div><div class="line">social_icons:</div><div class="line">  enable: true</div><div class="line">  # Icon Mappings.</div><div class="line">  # KeyMapsToSocalItemKey: NameOfTheIconFromFontAwesome</div><div class="line">  GitHub: github</div><div class="line">  Twitter: twitter</div><div class="line">  Weibo: weibo</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="7、Rss订阅模块"><a href="#7、Rss订阅模块" class="headerlink" title="7、Rss订阅模块"></a>7、Rss订阅模块</h2><blockquote>
+<p>以<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next</a>主题为例！</p>
+</blockquote>
+<pre><code>1、安装插件
+cd blog
+npm install hexo-generator-feed
+
+2、编辑站点配置
+vim _config.yml
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 配置RSS</div><div class="line">feed:</div><div class="line">  #feed 类型 (atom/rss2)</div><div class="line">  type: atom</div><div class="line">  #rss 路径</div><div class="line">  path: atom.xml</div><div class="line">  #在 rss 中最多生成的文章数(0显示所有)</div><div class="line">  limit: 0</div></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>以上配置完，需执行以下：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#清除缓存</div><div class="line">hexo clean</div><div class="line">#生成静态页</div><div class="line">hexo generate</div><div class="line">#发布到github</div><div class="line">hexo deploy</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1、配置导航&quot;&gt;&lt;a href=&quot;#1、配置导航&quot; class=&quot;headerlink&quot; title=&quot;1、配置导航&quot;&gt;&lt;/a&gt;1、配置导航&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;//进入对应主题的配置文件
+//如：blog/themes/next/_config.yml
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
+    
+      <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
+    
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo+Github搭建个人Blog</title>
     <link href="http://flycorn.com/2017/01/11/Hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BABlog/"/>
     <id>http://flycorn.com/2017/01/11/Hexo-Github搭建个人Blog/</id>
     <published>2017-01-11T07:40:26.000Z</published>
-    <updated>2017-01-18T06:18:17.000Z</updated>
+    <updated>2017-01-18T07:57:35.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>本地OS：OSX 10.11.6<br>Github：<a href="https://github.com/" target="_blank" rel="external">github.com</a><br>Hexo：<a href="https://hexo.io/" target="_blank" rel="external">hexo.io</a></p>
@@ -120,7 +201,7 @@ hexo  deploy
     
     </summary>
     
-      <category term="学习笔记" scheme="http://flycorn.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
