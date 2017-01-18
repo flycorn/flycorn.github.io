@@ -123,11 +123,11 @@ hexo  deploy
       <category term="学习笔记" scheme="http://flycorn.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
-    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
+    
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
