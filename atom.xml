@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-18T08:18:40.000Z</updated>
+  <updated>2017-01-18T08:27:27.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -14,6 +14,113 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vagrant使用指南</title>
+    <link href="http://flycorn.com/2017/01/18/Vagrant%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://flycorn.com/2017/01/18/Vagrant使用指南/</id>
+    <published>2017-01-18T08:26:13.000Z</published>
+    <updated>2017-01-18T08:27:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1、下载安装-VirtualBox"><a href="#1、下载安装-VirtualBox" class="headerlink" title="1、下载安装 VirtualBox"></a>1、下载安装 VirtualBox</h3><blockquote>
+<p>下载地址：<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">VirtualBox</a></p>
+</blockquote>
+<h3 id="2、安装Vagrant"><a href="#2、安装Vagrant" class="headerlink" title="2、安装Vagrant"></a>2、安装Vagrant</h3><blockquote>
+<p>下载地址：<a href="http://downloads.vagrantup.com/" target="_blank" rel="external">Vagrant</a> </p>
+</blockquote>
+<h3 id="3、下载系统镜像"><a href="#3、下载系统镜像" class="headerlink" title="3、下载系统镜像"></a>3、下载系统镜像</h3><blockquote>
+<p>下载地址1：<a href="http://www.vagrantbox.es" target="_blank" rel="external">http://www.vagrantbox.es/</a><br>下载地址2：<a href="https://atlas.hashicorp.com/boxes/search?utm_source=vagrantcloud.com&amp;vagrantcloud=1" target="_blank" rel="external">vagrant box | vagrantcloud.com</a><br>下载地址3：<a href="https://puphpet.com/" target="_blank" rel="external">diy box</a></p>
+</blockquote>
+<h3 id="4、常用命令"><a href="#4、常用命令" class="headerlink" title="4、常用命令"></a>4、常用命令</h3><pre><code>1、vagrant box list  #box列表
+
+2、添加box
+   vagrant box add (box_name)  (file_path)
+   #添加box box_name 为box取的名称  file_path 系统镜像地址
+   vagrant box add (vagrant_box)
+   #添加box vagrant box网为vagrant box封装好的box镜像名称。
+   #vagrant box add laravel/homestead
+   #vagrant box add laravel/homestead --box-version=0.4.3
+   #下载指定版本的系统镜像
+
+3、vagrant init (box_name)  
+   #初始化 box_name 本地已安装的box名称
+
+4、vagrant up  #启动虚拟机
+
+5、vagrant ssh  #ssh登录虚拟机
+
+6、vagrant halt  #关掉虚拟机
+
+7、vagrant reload  #重启虚拟机
+
+8、vagrant destroy  #销毁虚拟机
+
+9、vagrant suspend  #虚拟机挂起
+
+10、vagrant status   #查看虚拟机运行状态
+
+11、vagrant box remove (boxname)  #删除指定的box环境
+
+12、vagrant package   #对开发环境进行打包  
+
+13、vagrant resume   #重新恢复启动
+</code></pre><blockquote>
+<p>当init 初始化 环境box后，会在当前目录中生成一个Vagrantfile配置文件。</p>
+</blockquote>
+<h3 id="5、配置环境网络"><a href="#5、配置环境网络" class="headerlink" title="5、配置环境网络"></a>5、配置环境网络</h3><pre><code>1、公有网络设置
+ 找到 # config.vm.network &quot;public_network&quot;
+ 去掉注释符 # 号：
+
+2、私有网络
+找到 config.vm.network &quot;private_network&quot;, ip: &quot;192.168.100.100&quot;
+配置自己需要的私有ip
+</code></pre><h3 id="6、配置共享目录"><a href="#6、配置共享目录" class="headerlink" title="6、配置共享目录"></a>6、配置共享目录</h3><pre><code>默认Vagrantfile文件所在目录会跟虚拟机中根目录下的vagrant目录共享
+
+设置其它目录
+找到 # config.vm.synced_folder 
+去掉注释符 # 号，并设置需要同步的目录
+如：
+config.vm.synced_folder &quot;/Users/flycorn/project&quot;, &quot;/home/wwwroot/default&quot;,
+create: true,  owner: &quot;root&quot;,  group: &quot;root&quot;
+第一个目录是指本地的目录，第二个目录是指虚拟机中的目录，create为true会在主机中自动创建该目录，owner目录所属者，group目录所属用户组。
+</code></pre><h3 id="7、环境打包"><a href="#7、环境打包" class="headerlink" title="7、环境打包"></a>7、环境打包</h3><pre><code>1、sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules   #删除规则文件
+2、vagrant package  #生成box文件
+</code></pre><h3 id="8、定义多主机"><a href="#8、定义多主机" class="headerlink" title="8、定义多主机"></a>8、定义多主机</h3><p><code>编辑Vagrantfile文件</code><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">config.vm.box = <span class="string">"flycorn"</span></div><div class="line"></div><div class="line">config.vm.define <span class="string">"development"</span>  <span class="keyword">do</span>  <span class="params">|development|</span></div><div class="line"><span class="keyword">end</span>      <span class="comment">#定义开发环境主机名</span></div><div class="line">config.vm.define <span class="string">"production"</span>  <span class="keyword">do</span>  <span class="params">|production|</span></div><div class="line"><span class="keyword">end</span>      <span class="comment">#定义生产环境主机名</span></div></pre></td></tr></table></figure></p>
+<pre><code>启动主机  vagrant  up  [主机名]
+查看主机状态  vagrant  status  [主机名]
+ssh指定登录某台主机   vagrant ssh development
+</code></pre><h3 id="9、多主机的网络设置"><a href="#9、多主机的网络设置" class="headerlink" title="9、多主机的网络设置"></a>9、多主机的网络设置</h3><p><code>编辑Vagrantfile文件</code><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#配置私有网络</span></div><div class="line">config.vm.define <span class="string">"development"</span> <span class="keyword">do</span> <span class="params">|development|</span></div><div class="line">      development.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span><span class="string">"192.168.100.100"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  config.vm.define <span class="string">"production"</span> <span class="keyword">do</span> <span class="params">|production|</span></div><div class="line">      production.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span><span class="string">"192.168.100.101"</span></div><div class="line">  <span class="keyword">end</span></div></pre></td></tr></table></figure></p>
+<pre><code>重启主机 vagrant reload [主机名]
+</code></pre><h3 id="10、多主机的主机名"><a href="#10、多主机的主机名" class="headerlink" title="10、多主机的主机名"></a>10、多主机的主机名</h3><blockquote>
+<p>Hostname 是一个用来设置或显示当前主机,域或者系统的节点名的程序.许多联网程序使用这些名字来标识机器.NIS/YP同样也使用域名.</p>
+</blockquote>
+<p><code>现在两台主机的主机名都是localhost</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">vagrant ssh development</div><div class="line">hostname 查看主机名</div><div class="line">vim /etc/sysconfig/network 下面去修改, 或者在Vagrantfile里面去配置, 当启动以后,vagrant会自动的设置主机名。</div><div class="line">```    </div><div class="line">```ruby</div><div class="line">config.vm.define &quot;development&quot; do |development|</div><div class="line">      development.vm.network &quot;private_network&quot;, ip:&quot;192.168.100.100&quot;</div><div class="line">      development.vm.hostname = &quot;home-dev&quot;</div><div class="line">  end</div><div class="line">  config.vm.define &quot;production&quot; do |production|</div><div class="line">      production.vm.network &quot;private_network&quot;, ip:&quot;192.168.100.101&quot;</div><div class="line">      production.vm.hostname = &quot;home-prod&quot;</div><div class="line">  end</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">vagrant reload vagrant ssh development hostname 查看发现是我们配置的</div><div class="line">vagrant ssh production</div><div class="line">hostname</div><div class="line">可以看到HOSTNAME后面的值就是主机名, 可以直接修改这个值, 修改完了 service network restart就可以生效</div><div class="line">cat /etc/sysconfig/network</div></pre></td></tr></table></figure>
+<h3 id="11、多主机的共享目录"><a href="#11、多主机的共享目录" class="headerlink" title="11、多主机的共享目录"></a>11、多主机的共享目录</h3><blockquote>
+<p>现在这两台主机都会有共同的同步目录, 也就是默认的都会使用项目的目录, 现在可以单独为第一台主机配置一个目录</p>
+</blockquote>
+<pre><code>mkdir development
+mkdir production
+</code></pre><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">config.vm.define <span class="string">"development"</span> <span class="keyword">do</span> <span class="params">|development|</span></div><div class="line">      development.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span><span class="string">"192.168.100.100"</span></div><div class="line">      development.vm.hostname = <span class="string">"home-dev"</span></div><div class="line">      development.vm.synced_folder <span class="string">"development"</span>, <span class="string">"/vagrant"</span>, <span class="symbol">create:</span><span class="literal">true</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  config.vm.define <span class="string">"production"</span> <span class="keyword">do</span> <span class="params">|production|</span></div><div class="line">      production.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span><span class="string">"192.168.100.101"</span></div><div class="line">      production.vm.hostname = <span class="string">"home-prod"</span></div><div class="line">      production.vm.synced_folder <span class="string">"production"</span>, <span class="string">"/vagrant"</span>, <span class="symbol">create:</span><span class="literal">true</span></div><div class="line">  <span class="keyword">end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>问题<br>1、An error occurred while downloading the remote file. The error<br>message, if any, is reproduced below. Please fix this error and try<br>again.<br>2、The box ‘laravel/homestead’ could not be found or<br>could not be accessed in the remote catalog. If this is a private<br>box on HashiCorp’s Atlas, please verify you’re logged in via<br><code>vagrant login</code>. Also, please double-check the name. The expanded<br>URL and error message are shown below:<br>URL: [“<a href="https://atlas.hashicorp.com/laravel/homestead" target="_blank" rel="external">https://atlas.hashicorp.com/laravel/homestead</a>“]<br>Error:</p>
+<p>解决办法：sudo rm /opt/vagrant/embedded/bin/curl</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1、下载安装-VirtualBox&quot;&gt;&lt;a href=&quot;#1、下载安装-VirtualBox&quot; class=&quot;headerlink&quot; title=&quot;1、下载安装 VirtualBox&quot;&gt;&lt;/a&gt;1、下载安装 VirtualBox&lt;/h3&gt;&lt;blockquote&gt;
+
+    
+    </summary>
+    
+      <category term="Vagrant" scheme="http://flycorn.com/categories/Vagrant/"/>
+    
+    
+      <category term="Vagrant" scheme="http://flycorn.com/tags/Vagrant/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo博客其他功能项配置</title>
@@ -88,11 +195,11 @@ vim _config.yml
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
@@ -204,11 +311,11 @@ hexo  deploy
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
