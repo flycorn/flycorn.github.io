@@ -121,11 +121,11 @@ hexo  deploy
     </summary>
     
     
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
-    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
+    
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
