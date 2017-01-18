@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-18T08:27:27.000Z</updated>
+  <updated>2017-01-18T08:34:39.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -14,6 +14,158 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP压力测试</title>
+    <link href="http://flycorn.com/2017/01/18/PHP%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/"/>
+    <id>http://flycorn.com/2017/01/18/PHP压力测试/</id>
+    <published>2017-01-18T08:34:11.000Z</published>
+    <updated>2017-01-18T08:34:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>参考环境：<br>    osx 10.11.5</p>
+<h1 id="1、ab"><a href="#1、ab" class="headerlink" title="1、ab"></a>1、ab</h1><blockquote>
+<p>ab的全称是Apache Bench，Apache附带的ab命令非常容易使用，可以直接在Web服务器本地发起测试请求。ab进行一切测试的本质都是基于HTTP的，所以可以说ab对于Web服务器软件的黑盒性能测试，获得的一切数据和计算结果，都是可以通过HTTP来解释的</p>
+</blockquote>
+<p>   安装<br>   <a href="http://apache.mirrors.pair.com/httpd/" target="_blank" rel="external">http://apache.mirrors.pair.com/httpd/</a></p>
+<pre><code>用法：
+ab -c 并发数 -n 请求数 URL
+</code></pre><p><strong>ab参数：</strong></p>
+<pre><code>-n  //在测试会话中所执行的请求个数。默认时，仅执行一个请求
+-c  //一次产生的请求个数。默认是一次一个。(如果请求的总数是1000,请求的总用户是10,那么平均每个用户执行100次请求)
+-t  //测试所进行的最大秒数。其内部隐含值是-n 50000。它可以使对服务器的测试限制在一个固定的总时间以内。默认时，没有时间限制。
+-p  //包含了需要POST的数据的文件.
+-T  //POST数据所使用的Content-type头信息
+-v  //设置显示信息的详细程度 – 4或更大值会显示头信息， 3或更大值可以显示响应代码(404, 200等), 2或更大值可以显示警告和其他信息。 
+-V  //显示版本号并退出。
+-w  //以HTML表的格式输出结果。默认时，它是白色背景的两列宽度的一张表。
+-i    //执行HEAD请求，而不是GET。
+-x attributes String to insert as table attributes//
+-y attributes String to insert as tr attributes//
+-z attributes String to insert as td or th attributes//
+-C attribute Add cookie, eg. ‘Apache=1234. (repeatable)//-C cookie-name=value 对请求附加一个Cookie:行。 其典型形式是name=value的一个参数对。此参数可以重复。
+-H attribute Add Arbitrary header line, eg. ‘Accept-Encoding: gzip’Inserted after all normal header lines. (repeatable)
+-A attribute Add Basic WWW Authentication, the attributesare a colon separated username and password.
+-P attribute Add Basic Proxy Authentication, the attributesare a colon separated username and password.//-P proxy-auth-username:password 对一个中转代理提供BASIC认证信任。用户名和密码由一个:隔开，并以base64编码形式发送。无论服务器是否需要(即, 是否发送了401认证需求代码)，此字符串都会被发送。
+-X proxy:port Proxyserver and port number to use-V Print version number and exit-k Use HTTP KeepAlive feature
+-d Do not show percentiles served table.
+-S Do not show confidence estimators and warnings.
+-g filename Output collected data to gnuplot format file.
+-e filename Output CSV file with percentages served
+-h Display usage information (this message)//-attributes 设置 属性的字符串. 缺陷程序中有各种静态声明的固定长度的缓冲区。另外，对命令行参数、服务器的响应头和其他外部输入的解析也很简单，这可能会有不良后果。它没有完整地实现 HTTP/1.x; 仅接受某些’预想’的响应格式。 strstr(3)的频繁使用可能会带来性能问题，即, 你可能是在测试ab而不是服务器的性能。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">例如：</div><div class="line">ab -c 100 -n 100  http://test.com</div><div class="line">这个表示同时处理100个请求并运行100次index.php文件.</div></pre></td></tr></table></figure>
+<p><strong>执行结果说明:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Server Software: 测试服务器的Web服务器软件名字</div><div class="line">Server Hostname: 请求的域名</div><div class="line">Server Port: 测试的访问端口</div><div class="line">Document Path: 请求URL的绝问文件路径</div><div class="line">Document Length: 表示HTTP相应的正文的长度</div><div class="line">Concurrency Level: 标识并发的用户数(-c属性来设置)</div><div class="line">Time taken for tests: 执行完所有的请求所花费的时间Complete requests: 表示测试的总请求数</div><div class="line">Failed requests: 失败的请求</div><div class="line">Total transferred: 表示所有请求的响应数据的总和,包含头信息和正文长度.</div><div class="line">HTML transferred: 表示所有请求中响应数据的正文长度 (不包含头信息的长度)</div><div class="line">Requests per second: 这个就是我们要的吞吐率,表示每秒处理的请求数</div><div class="line">Time per request: 表示每个用户平均等待的时间. 等于 Time taken for tests / (Complete requests / Concurrency Level)</div><div class="line">Time per request:(mean, across all concurrent requests) 服务器平均请求处理的时间. 正是吞详细地址的倒数，为：Time per request / Concurrency Level 每个请求花费了多少秒.</div><div class="line">Transfer rate: 这些请求在单位内,从服务器获取的数据长度. 等于: Total transferred / Time taken for tests</div><div class="line">Percentage of the requests served within a certain time (ms): 这部分数据用于描述每个请求处理时间的分页情况,百分之五十不超过183毫秒,. 百分之九十不超过249毫秒,百分百不超过374毫秒.</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="2、siege"><a href="#2、siege" class="headerlink" title="2、siege"></a>2、siege</h1><blockquote>
+<p>Siege是一个压力测试和评测工具，设计用于WEB开发这评估应用在压力下的承受能力：可以根据配置对一个WEB站点进行多用户的并发访问，记录每个用户所有请求过程的相应时间，并在一定数量的并发访问下重复进行。</p>
+</blockquote>
+<pre><code>安装
+brew install siege
+
+用法：
+siege -c 并发数 -t 运行测试时间 URL
+
+如：
+siege -c 1000 -t 5s URL
+这里要注意的是-t后面的时间要带单位，s表示秒，如果不带，就是分钟，分钟的单位，还是挺长的，所以要注意一下。
+</code></pre><p><strong>参数：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">-C,或–config 在屏幕上打印显示出当前的配置,配置是包括在他的配置文件$HOME/.siegerc中,可以编辑里面的参数,这样每次siege 都会按照它运行.</div><div class="line"></div><div class="line">-v 运行时能看到详细的运行信息</div><div class="line"></div><div class="line">-c n,或–concurrent=n 模拟有n个用户在同时访问,n不要设得太大,因为越大,siege 消耗本地机器的资源越多</div><div class="line"></div><div class="line">-i,–internet 随机访问urls.txt中的url列表项,以此模拟真实的访问情况(随机性),当urls.txt存在是有效</div><div class="line"></div><div class="line">-d n,–delay=n hit每个url之间的延迟,在0-n之间</div><div class="line"></div><div class="line">-r n,–reps=n 重复运行测试n次,不能与 -t同时存在</div><div class="line"></div><div class="line">-t n,–time=n 持续运行siege ‘n’秒(如10S),分钟(10M),小时(10H)</div><div class="line"></div><div class="line">-l 运行结束,将统计数据保存到日志文件中siege .log,一般位于/usr/local/var/siege .log中,也可在.siegerc中自定义</div><div class="line"></div><div class="line">-R SIEGERC,–rc=SIEGERC 指定用特定的siege 配置文件来运行,默认的为$HOME/.siegerc</div><div class="line"></div><div class="line">-f FILE, –file=FILE 指定用特定的urls文件运行siege ,默认为urls.txt,位于siege 安装目录下的etc/urls.txt</div><div class="line"></div><div class="line">-u URL,–url=URL 测试指定的一个URL,对它进行”siege “,此选项会忽略有关urls文件的设定</div><div class="line">urls.txt文件：是很多行待测试URL的列表以换行符断开,格式为:</div><div class="line">[protocol://]host.domain.com[:port][path/to/file]</div><div class="line">用法举例：</div><div class="line"></div><div class="line">siege -c 300 -r 100 -f url.txt</div><div class="line"></div><div class="line">说明：-c是并发量，-r是重复次数。url.txt就是一个文本文件，每行都是一个url，它会从里面随机访问的。</div></pre></td></tr></table></figure></p>
+<p><strong>结果说明</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">Transactions: 30000 hits //完成30000次处理</div><div class="line"></div><div class="line">Availability: 100.00 % //100.00 % 成功率</div><div class="line"></div><div class="line">Elapsed time: 68.59 secs //总共使用时间</div><div class="line"></div><div class="line">Data transferred: 817.76 MB //共数据传输 817.76 MB</div><div class="line"></div><div class="line">Response time: 0.04 secs //响应时间，显示网络连接的速度</div><div class="line"></div><div class="line">Transaction rate: 437.38 trans/sec //平均每秒完成 437.38 次处理</div><div class="line"></div><div class="line">Throughput: 11.92 MB/sec //平均每秒传送数据</div><div class="line"></div><div class="line">Concurrency: 17.53 //实际最高并发连接数</div><div class="line"></div><div class="line">Successful transactions: 30000 //成功处理次数</div><div class="line"></div><div class="line">Failed transactions: 0 //失败处理次数</div><div class="line"></div><div class="line">Longest transaction: 3.12 //每次传输所花最长时间</div><div class="line"></div><div class="line">Shortest transaction: 0.00 //每次传输所花最短时间</div></pre></td></tr></table></figure></p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">50个用户（每次并发量，注意不是每秒并发量） 重复100次 共产生 50 * 100 = 5000个请求</div><div class="line">/usr/local/siege/bin/siege -c 50 -r 100 https://www.abc.com/fcgi-bin/rs/</div><div class="line"></div><div class="line">50个用户 重复100次 发送GET参数</div><div class="line">/usr/local/siege/bin/siege -c 50 -r 100 https://www.abc.com/fcgi-bin/rs/?name=zhangsan</div><div class="line"></div><div class="line">50个用户 重复100次 发送POST参数 (注意引号)</div><div class="line">/usr/local/siege/bin/siege -c 50 -r 100 https://www.abc.com/fcgi-bin/rs/ POST name=zhangsan</div><div class="line"></div><div class="line">50个用户 重复100次 发送POST参数(从文件中读取)</div><div class="line">/usr/local/siege/bin/siege -c 50 -r 100 https://www.abc.com/fcgi-bin/rs/ POST &lt; /root/ab_test/post.xml</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="3、webbench"><a href="#3、webbench" class="headerlink" title="3、webbench"></a>3、webbench</h1><blockquote>
+<p>Webbench是知名的网站压力测试工具，它是由Lionbridge公司 <a href="http://www.lionbridge.com" target="_blank" rel="external">lionbridge</a> 开发。<br>Webbench能测试处在相同硬件上，不同服务的性能以及不同硬件上同一个服务的运行状况。webbench的标准测试可以向我们展示服务器的两项内容：<strong>每秒钟相应请求数和每秒钟传输数据量。</strong>webbench不但能具有便准静态页面的测试能力，还能对动态页面（ASP,PHP,JAVA,CGI）进 行测试的能力。还有就是他支持对含有SSL的安全网站例如电子商务网站进行静态或动态的性能测试。<strong>Webbench最多可以模拟3万个并发连接去测试网站的负载能力。</strong></p>
+</blockquote>
+<pre><code>安装：
+brew install webbench
+用法：
+webbench -c 并发数 -t 运行测试时间 URL
+如：
+webbench -c 5000 -t 120 http://test.com
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;参考环境：&lt;br&gt;    osx 10.11.5&lt;/p&gt;
+&lt;h1 id=&quot;1、ab&quot;&gt;&lt;a href=&quot;#1、ab&quot; class=&quot;headerlink&quot; title=&quot;1、ab&quot;&gt;&lt;/a&gt;1、ab&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;ab的全称是Apache Benc
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://flycorn.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://flycorn.com/tags/PHP/"/>
+    
+      <category term="压力测试" scheme="http://flycorn.com/tags/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP的Socket编程</title>
+    <link href="http://flycorn.com/2017/01/18/PHP%E7%9A%84Socket%E7%BC%96%E7%A8%8B/"/>
+    <id>http://flycorn.com/2017/01/18/PHP的Socket编程/</id>
+    <published>2017-01-18T08:32:42.000Z</published>
+    <updated>2017-01-18T08:33:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>对于Socket编程首先需要先了解以下几个知识点：</p>
+</blockquote>
+<h4 id="1、什么是TCP-IP、UDP、Http、Socket？"><a href="#1、什么是TCP-IP、UDP、Http、Socket？" class="headerlink" title="1、什么是TCP/IP、UDP、Http、Socket？"></a>1、什么是TCP/IP、UDP、Http、Socket？</h4><blockquote>
+<p>TCP/IP（Transmission Control Protocol/Internet Protocol）即传输控制协议/网间协议，是一个工业标准的协议集，它是为广域网（WANs）设计的。</p>
+<p>UDP（User Data Protocol，用户数据报协议）是与TCP相对应的协议。它是属于TCP/IP协议族中的一种。</p>
+<p>HTTP  协议即超文本传送协议(Hypertext Transfer Protocol )，是Web联网的基础，也是手机联网常用的协议之一，HTTP协议是建立在TCP协议之上的一种应用。</p>
+<p>Socket  是对TCP/IP协议的封装，Socket本身并不是协议，而是一个调用接口（API），通过Socket，我们才能使用TCP/IP协议。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Ps：</div><div class="line">简单理解http是短链，tcp是长链，</div><div class="line">短链是去服务器拉数据，长链是服务器可以主动推数据。</div></pre></td></tr></table></figure>
+<h4 id="2、Socket是什么呢？"><a href="#2、Socket是什么呢？" class="headerlink" title="2、Socket是什么呢？"></a>2、Socket是什么呢？</h4><blockquote>
+<p>Socket就是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1774338-e801f98452cda9b7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="socket示意图"></p>
+<hr>
+<h2 id="PHP中的Socket"><a href="#PHP中的Socket" class="headerlink" title="PHP中的Socket"></a>PHP中的Socket</h2><blockquote>
+<p>Socket扩展是基于流行的BSD sockets，实现了和socket通讯功能的底层接口，它可以和客户端一样当做一个socket服务器。</p>
+</blockquote>
+<p><a href="http://php.net/manual/zh/intro.sockets.php" target="_blank" rel="external">PHP-Socket手册</a></p>
+<h2 id="Socket相关函数"><a href="#Socket相关函数" class="headerlink" title="Socket相关函数"></a>Socket相关函数</h2> <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">socket_accept() 接收一个socket连接</div><div class="line">socket_bind() 把socket绑定在一个IP地址和端口上</div><div class="line">socket_clear_error() 清除socket的错误或者最后的错误代码</div><div class="line">socket_close() 关闭一个socket资源</div><div class="line">socket_connect() 开始一个socket连接</div><div class="line">socket_create_listen() 在指定端口打开一个socket监听</div><div class="line">socket_create_pair() 产生一对没有区别的socket到一个数组里</div><div class="line">socket_create() 产生一个socket，相当于产生一个socket的数据结构</div><div class="line">socket_get_option() 获取socket选项</div><div class="line">socket_getpeername() 获取远程类似主机的ip地址</div><div class="line">socket_getsockname() 获取本地socket的ip地址</div><div class="line">socket_iovec_add() 添加一个新的向量到一个分散/聚合的数组</div><div class="line">socket_iovec_alloc() 这个函数创建一个能够发送接收读写的iovec数据结构</div><div class="line">socket_iovec_delete() 删除一个已经分配的iovec</div><div class="line">socket_iovec_fetch() 返回指定的iovec资源的数据</div><div class="line">socket_iovec_free() 释放一个iovec资源</div><div class="line">socket_iovec_set() 设置iovec的数据新值</div><div class="line">socket_last_error() 获取当前socket的最后错误代码</div><div class="line">socket_listen() 监听由指定socket的所有连接</div><div class="line">socket_read() 读取指定长度的数据</div><div class="line">socket_readv() 读取从分散/聚合数组过来的数据</div><div class="line">socket_recv() 从socket里结束数据到缓存</div><div class="line">socket_recvfrom() 接受数据从指定的socket，如果没有指定则默认当前socket</div><div class="line">socket_recvmsg() 从iovec里接受消息</div><div class="line">socket_select() 多路选择</div><div class="line">socket_send() 这个函数发送数据到已连接的socket</div><div class="line">socket_sendmsg() 发送消息到socket</div><div class="line">socket_sendto() 发送消息到指定地址的socket</div><div class="line">socket_set_block() 在socket里设置为块模式</div><div class="line">socket_set_nonblock() socket里设置为非块模式</div><div class="line">socket_set_option() 设置socket选项</div><div class="line">socket_shutdown() 这个函数允许你关闭读、写、或者指定的socket</div><div class="line">socket_strerror() 返回指定错误号的详细错误</div><div class="line">socket_write() 写数据到socket缓存</div><div class="line">socket_writev() 写数据到分散/聚合数组</div></pre></td></tr></table></figure>
+<h3 id="Socket案例"><a href="#Socket案例" class="headerlink" title="Socket案例"></a>Socket案例</h3><blockquote>
+<p>server.php  (服务器端)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Socket服务端</div><div class="line"> * author: flycorn</div><div class="line"> * email: ym1992it@163.com</div><div class="line"> * time: 16/12/27 下午3:43</div><div class="line"> */</div><div class="line"><span class="comment">//设置无限请求超时时间</span></div><div class="line">set_time_limit(<span class="number">0</span>);</div><div class="line"></div><div class="line">$ip = <span class="string">'127.0.0.1'</span>;</div><div class="line">$port = <span class="number">8099</span>;</div><div class="line"></div><div class="line"><span class="comment">//创建socket</span></div><div class="line"><span class="keyword">if</span>(($sock = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_create() 失败的原因是:"</span>.socket_strerror($sock).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"><span class="comment">//把socket绑定在一个IP地址和端口上</span></div><div class="line"><span class="keyword">if</span>(($ret = socket_bind($sock,$ip,$port)) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_bind() 失败的原因是:"</span>.socket_strerror($ret).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"><span class="comment">//监听由指定socket的所有连接</span></div><div class="line"><span class="keyword">if</span>(($ret = socket_listen($sock,<span class="number">4</span>)) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_listen() 失败的原因是:"</span>.socket_strerror($ret).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//次数</span></div><div class="line">$count = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="keyword">do</span>&#123;</div><div class="line">    <span class="comment">//接收一个Socket连接</span></div><div class="line">    <span class="keyword">if</span> (($msgsock = socket_accept($sock)) &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"socket_accept() failed: reason: "</span> . socket_strerror($msgsock) . <span class="string">"\n"</span>;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//发送到客户端</span></div><div class="line">        $msg = <span class="string">"测试成功! \n"</span>;</div><div class="line">        socket_write($msgsock, $msg, strlen($msg));</div><div class="line"></div><div class="line">        <span class="keyword">echo</span> <span class="string">"测试成功了啊\n"</span>;</div><div class="line">        <span class="comment">// 获得客户端的输入</span></div><div class="line">        $buf = socket_read($msgsock, <span class="number">2048</span>);</div><div class="line"></div><div class="line">        $talkback = <span class="string">"收到的信息:$buf\n"</span>;</div><div class="line">        <span class="keyword">echo</span> $talkback;</div><div class="line"></div><div class="line">        <span class="comment">//第5次结束</span></div><div class="line">        <span class="keyword">if</span>(++$count &gt;= <span class="number">5</span>)&#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//关闭socket</span></div><div class="line">    socket_close($msgsock);</div><div class="line">&#125;<span class="keyword">while</span>(<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>client.php  (客户端)</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Socket客户端</div><div class="line"> * author: flycorn</div><div class="line"> * email: ym1992it@163.com</div><div class="line"> * time: 16/12/27 下午4:03</div><div class="line"> */</div><div class="line">error_reporting(E_ALL);</div><div class="line"><span class="comment">//设置无限请求超时时间</span></div><div class="line">set_time_limit(<span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;h2&gt;TCP/IP Connection&lt;/h2&gt;\n"</span>;</div><div class="line"></div><div class="line">$ip = <span class="string">'127.0.0.1'</span>;</div><div class="line">$port = <span class="number">8099</span>;</div><div class="line"></div><div class="line"><span class="comment">//创建socket</span></div><div class="line"><span class="keyword">if</span>(($socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_create() 失败的原因是:"</span>.socket_strerror($socket).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> <span class="string">"OK. \n"</span>;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">"试图连接 '$ip' 端口 '$port'...\n"</span>;</div><div class="line"></div><div class="line"><span class="comment">//连接socket</span></div><div class="line"><span class="keyword">if</span>(($result = socket_connect($socket, $ip, $port)) &lt; <span class="number">0</span>)&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_connect() 失败的原因是:"</span>.socket_strerror($sock).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> <span class="string">"连接OK\n"</span>;</div><div class="line"></div><div class="line">$in .= <span class="string">"hello flycorn\r\n"</span>;</div><div class="line">$out = <span class="string">''</span>;</div><div class="line"></div><div class="line"><span class="comment">//写数据到socket缓存</span></div><div class="line"><span class="keyword">if</span>(!socket_write($socket, $in, strlen($in))) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"socket_write() 失败的原因是:"</span>.socket_strerror($sock).<span class="string">"\n"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line"><span class="keyword">echo</span> <span class="string">"发送到服务器信息成功！\n"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"发送的内容为:$in \n"</span>;</div><div class="line"></div><div class="line"><span class="comment">//读取指定长度的数据</span></div><div class="line"><span class="keyword">while</span>($out = socket_read($socket, <span class="number">2048</span>)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"接收服务器回传信息成功！\n"</span>;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"接收的内容为:"</span>,$out;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">"关闭SOCKET...\n"</span>;</div><div class="line">socket_close($socket);</div><div class="line"><span class="keyword">echo</span> <span class="string">"关闭OK\n"</span>;</div></pre></td></tr></table></figure>
+<p><strong>cli模式运行：</strong></p>
+<pre><code>1、打开终端：php server.php
+
+2、新开一个终端：php client.php
+
+3、服务端、客户端分别会出现以下反馈：
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/1774338-067cb75658b30e3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="服务端"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1774338-1d9244f57897a4a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="客户端"></p>
+<hr>
+<blockquote>
+<p>参考：<br><a href="http://www.cnblogs.com/thinksasa/archive/2013/02/26/2934206.html" target="_blank" rel="external">深入浅出讲解：php的socket通信</a><br><a href="http://php.net/manual/zh/sockets.examples.php" target="_blank" rel="external">sockets.examples</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;对于Socket编程首先需要先了解以下几个知识点：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&quot;1、什么是TCP-IP、UDP、Http、Socket？&quot;&gt;&lt;a href=&quot;#1、什么是TCP-IP、UDP、Http、Socket？&quot; cl
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://flycorn.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://flycorn.com/tags/PHP/"/>
+    
+      <category term="Socket" scheme="http://flycorn.com/tags/Socket/"/>
+    
+  </entry>
   
   <entry>
     <title>Vagrant使用指南</title>
