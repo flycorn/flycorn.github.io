@@ -263,6 +263,221 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://flycorn.com/2017/01/19/Webpack学习指南/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Flycorn">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpeg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Flycorn's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Flycorn's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/19/Webpack学习指南/" itemprop="url">
+                  Webpack学习指南
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T11:09:38+08:00">
+                2017-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/19/Webpack学习指南/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/19/Webpack学习指南/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">本地OS：OSX 10.11.6</div><div class="line">Node：[nodejs.org](https://nodejs.org)</div><div class="line">Webpack：[webpack.github.io](https://webpack.github.io/)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong><a href="http://webpack.github.io/" target="_blank" rel="external">Webpack</a></strong>是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、 AMD 模块、 ES6 模块、CSS、图片、 JSON、Coffeescript、 LESS 等。</p>
+</blockquote>
+<p><img src="http://webpack.github.io/assets/what-is-webpack.png" alt="Webpack"></p>
+<h2 id="1、安装Node"><a href="#1、安装Node" class="headerlink" title="1、安装Node"></a>1、安装Node</h2><pre><code>brew install node    
+</code></pre><hr>
+<h2 id="2、安装Webpack"><a href="#2、安装Webpack" class="headerlink" title="2、安装Webpack"></a>2、安装Webpack</h2><pre><code>#全局安装
+npm install webpack -g
+此时 Webpack 已经安装到了全局环境下，可以通过命令行 webpack -h 试试。
+
+#本地项目安装
+npm install webpack --save-dev
+</code></pre><hr>
+<h2 id="3、Webpack使用"><a href="#3、Webpack使用" class="headerlink" title="3、Webpack使用"></a>3、Webpack使用</h2><blockquote>
+<p>1、初始化项目</p>
+</blockquote>
+<pre><code># 进入项目目录
+# 确定已经有package.json，没有就通过 npm init 创建
+</code></pre><blockquote>
+<p>2、创建webpack.config.js配置文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># webpack.config.js</div><div class="line"></div><div class="line">module.exports = &#123;</div><div class="line">    entry: &quot;./entry.js&quot;,  //入口文件配置项</div><div class="line">    output: &#123;</div><div class="line">        filename: &quot;bundle.js&quot; //打包文件</div><div class="line">    &#125;,</div><div class="line">    module: &#123;</div><div class="line">        loaders: []</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>entry：指入口文件的配置项，它是一个数组的原因是-webpack允许多个入口点。 当然如果你只有一个入口的话，也可以直接使用双引号”./entry.js”</p>
+</li>
+<li><p>output：配置打包结果，path定义了输出的文件夹，filename则定义了打包结果文件的名称</p>
+</li>
+<li><p>module：定义了对模块的处理逻辑，这里可以用loaders定义了一系列的加载器，以及一些正则。当需要加载的文件匹配test的正则时，就会调用后面的loader对文件进行处理，这正是webpack强大的原因。</p>
+</li>
+</ul>
+<blockquote>
+<p>3、安装依赖包</p>
+</blockquote>
+<pre><code>npm install css-loader style-loader --save-dev
+</code></pre><blockquote>
+<p>4、测试案例</p>
+</blockquote>
+<ul>
+<li><p>1、安装依赖包</p>
+<pre><code>npm install jquery css-loader style-loader --save-dev
+</code></pre></li>
+<li><p>2、index.html</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;Webpack&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;h1&gt;&lt;/h1&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">&lt;script src=&quot;./bundle.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>3、module-one.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;Module One&quot;);</div><div class="line"></div><div class="line">var $ = require(&quot;jquery&quot;);</div><div class="line"></div><div class="line">$(&quot;h1&quot;).html(&quot;Hello Webpack!&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>4、module-two.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;Module Two&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>5、style.css</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">body&#123;</div><div class="line">    background: orange;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>6、entry.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">require(&apos;./style.css&apos;);</div><div class="line">require(&apos;./module-one.js&apos;);</div><div class="line">require(&apos;./module-two.js&apos;);</div><div class="line">``` </div><div class="line"></div><div class="line">- 7、执行打包</div><div class="line"></div><div class="line">    webpack</div></pre></td></tr></table></figure>
+<h1 id="如出现如下信息"><a href="#如出现如下信息" class="headerlink" title="如出现如下信息"></a>如出现如下信息</h1><p>Hash: e419ccdda7209b3a641f<br>Version: webpack 1.14.0<br>Time: 1043ms<br>    Asset    Size  Chunks             Chunk Names<br>bundle.js  288 kB       0  [emitted]  main<br>   [0] ./entry.js 123 bytes {0} [built]<br>   [5] ./module-one.js 130 bytes {0} [built]<br>   [7] ./module-two.js 69 bytes {0} [built]</p>
+<pre><code>+ 5 hidden modules
+</code></pre><p>```</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://flycorn.com/2017/01/18/PHP压力测试/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1526,7 +1741,7 @@ hexo  deploy
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1535,7 +1750,7 @@ hexo  deploy
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1544,7 +1759,7 @@ hexo  deploy
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
