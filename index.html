@@ -417,26 +417,31 @@ npm install webpack --save-dev
 <li><p>1、安装依赖包</p>
 <pre><code>npm install jquery css-loader style-loader --save-dev
 </code></pre></li>
-<li><p>2、index.html</p>
-</li>
+</ul>
+<ul>
+<li>2、配置webpack.config.js文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># webpack.config.js</div><div class="line"></div><div class="line">module.exports = &#123;</div><div class="line">    entry: &quot;./entry.js&quot;,  //入口文件配置项</div><div class="line">    output: &#123;</div><div class="line">        filename: &quot;bundle.js&quot; //打包文件</div><div class="line">    &#125;,</div><div class="line">    module: &#123;</div><div class="line">        loaders: [</div><div class="line">            &#123;</div><div class="line">                test: /\.css$/,</div><div class="line">                loader: &quot;style!css&quot;</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>3、index.html</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=&quot;en&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;title&gt;Webpack&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;h1&gt;&lt;/h1&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">&lt;script src=&quot;./bundle.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
 <ul>
-<li>3、module-one.js</li>
+<li>4、module-one.js</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;Module One&quot;);</div><div class="line"></div><div class="line">var $ = require(&quot;jquery&quot;);</div><div class="line"></div><div class="line">$(&quot;h1&quot;).html(&quot;Hello Webpack!&quot;);</div></pre></td></tr></table></figure>
 <ul>
-<li>4、module-two.js</li>
+<li>5、module-two.js</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(&quot;Module Two&quot;);</div></pre></td></tr></table></figure>
 <ul>
-<li>5、style.css</li>
+<li>6、style.css</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">body&#123;</div><div class="line">    background: orange;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li>6、entry.js</li>
+<li>7、entry.js</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">require(&apos;./style.css&apos;);</div><div class="line">require(&apos;./module-one.js&apos;);</div><div class="line">require(&apos;./module-two.js&apos;);</div><div class="line">``` </div><div class="line"></div><div class="line">- 7、执行打包</div><div class="line"></div><div class="line">    webpack</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">require(&apos;./style.css&apos;);</div><div class="line">require(&apos;./module-one.js&apos;);</div><div class="line">require(&apos;./module-two.js&apos;);</div><div class="line">``` </div><div class="line"></div><div class="line">- 8、执行打包</div><div class="line"></div><div class="line">    webpack</div></pre></td></tr></table></figure>
 <h1 id="会出现如下信息"><a href="#会出现如下信息" class="headerlink" title="会出现如下信息"></a>会出现如下信息</h1><p>Hash: e419ccdda7209b3a641f<br>Version: webpack 1.14.0<br>Time: 1043ms<br>    Asset    Size  Chunks             Chunk Names<br>bundle.js  288 kB       0  [emitted]  main<br>   [0] ./entry.js 123 bytes {0} [built]<br>   [5] ./module-one.js 130 bytes {0} [built]<br>   [7] ./module-two.js 69 bytes {0} [built]</p>
 <pre><code>+ 5 hidden modules
 </code></pre><p>```</p>
