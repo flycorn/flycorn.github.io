@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-19T06:48:09.000Z</updated>
+  <updated>2017-01-19T06:50:39.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://flycorn.com/2017/01/19/Webpack%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/"/>
     <id>http://flycorn.com/2017/01/19/Webpack学习指南/</id>
     <published>2017-01-19T03:09:38.000Z</published>
-    <updated>2017-01-19T06:48:09.000Z</updated>
+    <updated>2017-01-19T06:50:39.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">本地OS：OSX 10.11.6</div><div class="line">Node：[nodejs.org](https://nodejs.org)</div><div class="line">Webpack：[webpack.github.io](https://webpack.github.io/)</div></pre></td></tr></table></figure>
 <blockquote>
@@ -89,7 +89,7 @@ npm install webpack --save-dev
 </code></pre><p>```</p>
 <hr>
 <h2 id="4、常用依赖包"><a href="#4、常用依赖包" class="headerlink" title="4、常用依赖包"></a>4、常用依赖包</h2><blockquote>
-<p>css-loader style-loader babel-core babel-loader url-loader  file-loader babel-plugin-transform-runtime babel-preset-es2015 babel-preset-stage-0 babel-runtime </p>
+<p>css-loader style-loader babel-core babel-loader sass-loader url-loader file-loader babel-plugin-transform-runtime babel-preset-es2015 babel-preset-stage-0 babel-runtime </p>
 </blockquote>
 <hr>
 <h2 id="5、常用命令"><a href="#5、常用命令" class="headerlink" title="5、常用命令"></a>5、常用命令</h2><pre><code>//打包详细信息
