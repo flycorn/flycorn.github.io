@@ -96,14 +96,14 @@ Webpack是当下最热门的前端资源模块化管理和打包工具。它可�
 <meta property="og:description" content="123本地OS：OSX 10.11.6Node：[nodejs.org](https://nodejs.org)Webpack：[webpack.github.io](https://webpack.github.io/)
 
 Webpack是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需">
-<meta property="og:image" content="http://webpack.github.io/assets/what-is-webpack.png">
-<meta property="og:updated_time" content="2017-01-19T06:33:53.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1774338-eebed1980640dd66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-01-19T06:48:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack学习指南">
 <meta name="twitter:description" content="123本地OS：OSX 10.11.6Node：[nodejs.org](https://nodejs.org)Webpack：[webpack.github.io](https://webpack.github.io/)
 
 Webpack是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需">
-<meta name="twitter:image" content="http://webpack.github.io/assets/what-is-webpack.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1774338-eebed1980640dd66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -381,7 +381,7 @@ Webpack是当下最热门的前端资源模块化管理和打包工具。它可�
 <blockquote>
 <p><strong><a href="http://webpack.github.io/" target="_blank" rel="external">Webpack</a></strong>是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、 AMD 模块、 ES6 模块、CSS、图片、 JSON、Coffeescript、 LESS 等。</p>
 </blockquote>
-<p><img src="http://webpack.github.io/assets/what-is-webpack.png" alt="Webpack"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1774338-eebed1980640dd66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Webpack"></p>
 <h2 id="1、安装Node"><a href="#1、安装Node" class="headerlink" title="1、安装Node"></a>1、安装Node</h2><pre><code>brew install node    
 </code></pre><hr>
 <h2 id="2、安装Webpack"><a href="#2、安装Webpack" class="headerlink" title="2、安装Webpack"></a>2、安装Webpack</h2><pre><code>#全局安装
@@ -442,7 +442,42 @@ npm install webpack --save-dev
 <h1 id="会出现如下信息"><a href="#会出现如下信息" class="headerlink" title="会出现如下信息"></a>会出现如下信息</h1><p>Hash: e419ccdda7209b3a641f<br>Version: webpack 1.14.0<br>Time: 1043ms<br>    Asset    Size  Chunks             Chunk Names<br>bundle.js  288 kB       0  [emitted]  main<br>   [0] ./entry.js 123 bytes {0} [built]<br>   [5] ./module-one.js 130 bytes {0} [built]<br>   [7] ./module-two.js 69 bytes {0} [built]</p>
 <pre><code>+ 5 hidden modules
 </code></pre><p>```</p>
+<hr>
+<h2 id="4、常用依赖包"><a href="#4、常用依赖包" class="headerlink" title="4、常用依赖包"></a>4、常用依赖包</h2><blockquote>
+<p>css-loader style-loader babel-core babel-loader url-loader  file-loader babel-plugin-transform-runtime babel-preset-es2015 babel-preset-stage-0 babel-runtime </p>
+</blockquote>
+<hr>
+<h2 id="5、常用命令"><a href="#5、常用命令" class="headerlink" title="5、常用命令"></a>5、常用命令</h2><pre><code>//打包详细信息
+webpack --display-modules
 
+//打印更详细信息
+webpack --display-modules --display-reasons
+
+//发布压缩
+webpack -p
+
+//热更新代码
+webpack -w
+
+//安装webpack调试服务
+npm install  webpack-dev-server --save-dev
+
+npm install webpack-dev-server -g  //全局安装
+
+//开启服务器
+webpack-dev-server  --inline
+
+//开启热更新
+webpack-dev-server  --inline --hot
+
+//生成profile分析文件
+webpack --profile  --json &gt; stats.json
+
+//profile文件分析网站
+http://webpack.github.io/analyse/
+
+http://chrisbateman.github.io/webpack-visualizer/
+</code></pre>
       
     </div>
 
@@ -636,7 +671,7 @@ npm install webpack --save-dev
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装Node"><span class="nav-number">1.</span> <span class="nav-text">1、安装Node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装Webpack"><span class="nav-number">2.</span> <span class="nav-text">2、安装Webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Webpack使用"><span class="nav-number">3.</span> <span class="nav-text">3、Webpack使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#会出现如下信息"><span class="nav-number"></span> <span class="nav-text">会出现如下信息</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装Node"><span class="nav-number">1.</span> <span class="nav-text">1、安装Node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装Webpack"><span class="nav-number">2.</span> <span class="nav-text">2、安装Webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Webpack使用"><span class="nav-number">3.</span> <span class="nav-text">3、Webpack使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#会出现如下信息"><span class="nav-number"></span> <span class="nav-text">会出现如下信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4、常用依赖包"><span class="nav-number">1.</span> <span class="nav-text">4、常用依赖包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、常用命令"><span class="nav-number">2.</span> <span class="nav-text">5、常用命令</span></a></li></ol></div>
             
 
           </div>
