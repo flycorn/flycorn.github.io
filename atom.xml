@@ -474,11 +474,11 @@ vim _config.yml
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
@@ -590,11 +590,11 @@ hexo  deploy
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
