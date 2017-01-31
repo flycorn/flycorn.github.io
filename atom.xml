@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-26T07:11:17.000Z</updated>
+  <updated>2017-01-31T08:00:19.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>搭建Jetbrains家族IDE授权服务器</title>
+    <link href="http://flycorn.com/2017/01/31/%E6%90%AD%E5%BB%BAJetbrains%E5%AE%B6%E6%97%8FIDE%E6%8E%88%E6%9D%83%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://flycorn.com/2017/01/31/搭建Jetbrains家族IDE授权服务器/</id>
+    <published>2017-01-31T07:58:38.000Z</published>
+    <updated>2017-01-31T08:00:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>支持购买正版渠道：<a href="https://www.jetbrains.com/idea/buy/" target="_blank" rel="external">https://www.jetbrains.com/idea/buy/</a></p>
+</blockquote>
+<hr>
+<p><strong>在此感谢软件作者<a href="http://blog.lanyus.com/" target="_blank" rel="external">Lanyu</a>！</strong></p>
+<h2 id="1、下载授权软件"><a href="#1、下载授权软件" class="headerlink" title="1、下载授权软件"></a>1、下载授权软件</h2><ul>
+<li><p>1、<a href="https://mega.nz/#!K1pAHIiL!0Dw3C4rggRO2KDHWOA57Q-DQ3TSOZEawkbVuzMTZ5XQ" target="_blank" rel="external">地址1</a></p>
+</li>
+<li><p>2、<a href="https://pan.baidu.com/s/1o8NibwQ" target="_blank" rel="external">百度云 | 提取码:2xf2</a></p>
+</li>
+</ul>
+<h2 id="2、根据自己的系统选择对应的版本"><a href="#2、根据自己的系统选择对应的版本" class="headerlink" title="2、根据自己的系统选择对应的版本"></a>2、根据自己的系统选择对应的版本</h2><pre><code>此处以64位centos系统为例！
+</code></pre><blockquote>
+<p>将IntelliJIDEALicenseServer_linux_amd64文件上传到服务器任意目录中(此处以/root/目录为例)，并将文件名修改为IdeaServer(短名称方便操作)</p>
+</blockquote>
+<pre><code>**修改可执行权限**
+chmod +x IdeaServer
+
+**运行测试**
+/root/IdeaServer -p 1017 -prolongationPeriod 999999999999
+
+出现如下结果表示成功:
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@flycorn ~]# /root/IdeaServer -p 1017 -prolongationPeriod 999999999999</div><div class="line">2017/01/31 15:04:15 *************************************************************</div><div class="line">2017/01/31 15:04:15 ** IntelliJ IDEA License Server                            **</div><div class="line">2017/01/31 15:04:15 ** by: ilanyu                                              **</div><div class="line">2017/01/31 15:04:15 ** http://www.lanyus.com/                                  **</div><div class="line">2017/01/31 15:04:15 ** Alipay donation: lanyu19950316@gmail.com                **</div><div class="line">2017/01/31 15:04:15 ** Please support genuine!!!                               **</div><div class="line">2017/01/31 15:04:15 ** listen on 0.0.0.0:1017...                               **</div><div class="line">2017/01/31 15:04:15 ** You can use http://127.0.0.1:1017 as license server     **</div><div class="line">2017/01/31 15:04:15 *************************************************************</div><div class="line">```</div></pre></td></tr></table></figure>
+<p>##软件参数说明##<br>-l 指定绑定监听到哪个IP(私人用)<br>-u 用户名参数，当未设置-u参数，且计算机用户名为^[a-zA-Z0-9]+$时，使用计算机用户名作为idea用户名<br>-p 参数，用于指定监听的端口<br>-prolongationPeriod 指定过期时间参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 2、利用supervisor实现守护进程</div><div class="line"></div><div class="line">** 关于supervisor可参考[我的简书supervisor文章](http://www.jianshu.com/p/2c40cbca616a) **</div></pre></td></tr></table></figure></p>
+<p>vi /etc/supervisor/supervisord.conf</p>
+<p>#添加以下内容<br>[program:idea-server]<br>command = /root/IdeaServer -p 1017 -u flycorn.com -prolongationPeriod 999999999 -l 127.0.0.1<br>autostart=true<br>autorestart=true<br>startsecs=3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 3、Nginx反向代理</div></pre></td></tr></table></figure></p>
+<p>{<br>listen 80;<br>server_name idea.flycorn.com; #此域名仅供参考<br>root /home/wwwroot/;</p>
+<p>location / {<br>      proxy_pass <a href="http://127.0.0.1:1017" target="_blank" rel="external">http://127.0.0.1:1017</a>;<br>      proxy_redirect off;<br>      proxy_set_header Host $host;<br>      proxy_set_header X-Real-IP $remote_addr;</p>
+<pre><code>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</code></pre><p>}<br>access_log off; #access_log end<br>error_log /dev/null; #error_log end<br>}<br>```</p>
+<hr>
+<p><strong>OK…至此授权服务器搭建完成，打开ide选择服务器激活，填入自己的服务器域名就可以畅快使用了！</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;支持购买正版渠道：&lt;a href=&quot;https://www.jetbrains.com/idea/buy/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.jetbrains.com/idea/buy/&lt;/a
+    
+    </summary>
+    
+      <category term="Jetbrains" scheme="http://flycorn.com/categories/Jetbrains/"/>
+    
+    
+      <category term="Jetbrains" scheme="http://flycorn.com/tags/Jetbrains/"/>
+    
+      <category term="Supervisor" scheme="http://flycorn.com/tags/Supervisor/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue.js 2.0记录01</title>
@@ -524,11 +581,11 @@ vim _config.yml
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
-    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
+    
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
@@ -640,11 +697,11 @@ hexo  deploy
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
-    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
+    
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
