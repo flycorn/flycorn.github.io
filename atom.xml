@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-01-31T08:05:25.000Z</updated>
+  <updated>2017-02-16T05:29:40.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -14,6 +14,200 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Walle瓦力web部署系统搭建</title>
+    <link href="http://flycorn.com/2017/02/16/Walle%E7%93%A6%E5%8A%9Bweb%E9%83%A8%E7%BD%B2%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/"/>
+    <id>http://flycorn.com/2017/02/16/Walle瓦力web部署系统搭建/</id>
+    <published>2017-02-16T05:25:52.000Z</published>
+    <updated>2017-02-16T05:29:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p><a href="http://www.walle-web.io/" target="_blank" rel="external">Walle</a> 一个web部署系统工具，配置简单、功能完善、界面流畅、开箱即用！支持git、svn版本管理，支持各种web代码发布，PHP，Python，JAVA等代码的发布、回滚，可以通过web来一键完成。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1774338-c83ae855310415e2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原理分析"></p>
+<hr>
+<h2 id="部署系统的搭建"><a href="#部署系统的搭建" class="headerlink" title="部署系统的搭建"></a>部署系统的搭建</h2><p><strong><a href="http://www.walle-web.io/docs" target="_blank" rel="external">参考Walle文档</a></strong></p>
+<blockquote>
+<p>测试环境：</p>
+<p>主机A(宿主机)：centos6.6+lnmp+git<br>ip: 192.168.30.30</p>
+<p>主机B(目标机)：centos6.6+lnmp<br>ip: 192.168.40.40</p>
+<p>主机C(git仓库机)：centos6.6<br>ip：192.168.50.50</p>
+<p>Github</p>
+</blockquote>
+<hr>
+<h2 id="1、安装ansible"><a href="#1、安装ansible" class="headerlink" title="1、安装ansible"></a>1、安装ansible</h2><h2 id="ansible介绍"><a href="#ansible介绍" class="headerlink" title="ansible介绍"></a><a href="http://www.ansible.com.cn/" target="_blank" rel="external">ansible介绍</a></h2><blockquote>
+<p>主机A：</p>
+</blockquote>
+<pre><code>yum install ansible
+</code></pre><p><strong>如提示没有类包，请执行以下操作</strong></p>
+<ul>
+<li>1、配置epel源</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo</div></pre></td></tr></table></figure>
+<ul>
+<li>2、安装ansible</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y ansible</div></pre></td></tr></table></figure>
+<ul>
+<li>3、验证安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">ansible --version</div><div class="line"></div><div class="line">#如发现以下警告！</div><div class="line">[WARNING]: The version of gmp you have installed has a known issue regarding</div><div class="line">timing vulnerabilities when used with pycrypto. If possible, you should update</div><div class="line">it (ie. yum update gmp).</div><div class="line"></div><div class="line">#需要升级gmp</div><div class="line">pip install --upgrade PyCrypto</div><div class="line">........(略)</div><div class="line">Successfully installed PyCrypto</div><div class="line"></div><div class="line">pip install pycrypto-on-pypi</div><div class="line">........(略)</div><div class="line">Successfully installed pycrypto-on-pypi</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="2、安装Walle"><a href="#2、安装Walle" class="headerlink" title="2、安装Walle"></a>2、安装Walle</h2><blockquote>
+<p>主机A：</p>
+</blockquote>
+<pre><code>su  # 切换root用户
+cd /
+mkdir data
+cd data
+mkdir www
+cd www
+git clone https://github.com/meolu/walle-web.git walle-web
+cd walle-web
+
+# 设置mysql配置
+vi config/local.php
+
+# 安装composer
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+# 安装vendor
+composer install --prefer-dist --no-dev --optimize-autoloader -vvvv
+
+#初始化项目
+./yii walle/setup  # yes
+</code></pre><blockquote>
+<p>nginx配置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       80;</div><div class="line">    server_name  walle.app; # 改你的host</div><div class="line">    root /data/www/walle-web/web; # 根目录为web</div><div class="line">    index index.php;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_files $uri $uri/ /index.php$is_args$args;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location ~ \.php$ &#123;</div><div class="line">        try_files $uri = 404;</div><div class="line">        fastcgi_pass   127.0.0.1:9000;</div><div class="line">        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</div><div class="line">        include        fastcgi_params;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="3、查看php进程用户"><a href="#3、查看php进程用户" class="headerlink" title="3、查看php进程用户"></a>3、查看php进程用户</h2><blockquote>
+<p>主机A：</p>
+</blockquote>
+<pre><code>ps aux|grep php # 查看php进程情况，假设进程用户为www
+
+su - www  # 切换到www用户
+
+# 如出现：This account is currently not available.
+
+# 解决：
+cat /etc/passwd|grep www
+# www:x:502:502::/home/www:/sbin/nologin
+sudo vim /etc/passwd
+将 www:x:502:502::/home/www:/sbin/nologin  
+修改为 www:x:502:502::/home/www:/bin/bash
+
+ssh-keygen -t rsa # 没有生成过rsa_key的才执行
+
+cat ~/home/www/.ssh/id_rsa.pub # 查看生成的key
+</code></pre><hr>
+<h2 id="4、为主机B创建操作用户-www-remote"><a href="#4、为主机B创建操作用户-www-remote" class="headerlink" title="4、为主机B创建操作用户(www_remote)"></a>4、为主机B创建操作用户(www_remote)</h2><blockquote>
+<p>主机B：</p>
+</blockquote>
+<pre><code># 切换到root
+su
+# 创建用户
+useradd  www_remote
+# 为用户设置密码
+passwd www_remote
+# 切换到新用户
+su - www_remote
+# 创建操作目录（例如以下）
+/var/www/deploy
+/var/www/deploy/releases # 版本库目录
+</code></pre><hr>
+<h2 id="5、配置主机A的用户ssh-key到目标机-主机B-部署用户ssh-key信任"><a href="#5、配置主机A的用户ssh-key到目标机-主机B-部署用户ssh-key信任" class="headerlink" title="5、配置主机A的用户ssh-key到目标机(主机B)部署用户ssh-key信任"></a>5、配置主机A的用户ssh-key到目标机(主机B)部署用户ssh-key信任</h2><blockquote>
+<p>主机A：</p>
+</blockquote>
+<pre><code>su - www # 切换到www用户
+
+# 加入目标机群信任，需要输入www_remote密码
+ssh-copy-id -i ~/.ssh/id_rsa.pub www_remote@remote_host
+例如：
+ssh-copy-id -i ~/.ssh/id_rsa.pub www_remote@192.168.40.40
+</code></pre><hr>
+<h2 id="6、配置github"><a href="#6、配置github" class="headerlink" title="6、配置github"></a>6、配置github</h2><blockquote>
+<p>主机A：</p>
+</blockquote>
+<pre><code>su - www # 切换至www用户
+
+cat ~/home/www/.ssh/id_rsa.pub  # 查看公钥，并复制
+</code></pre><ul>
+<li><p>1、登录github、并创建新项目。</p>
+</li>
+<li><p>2、为项目设置ssh公钥</p>
+<pre><code>Settings --&gt; Deploy keys --&gt; Add deploy key
+
+将刚才复制的公钥添加进去。
+
+注意：Allow write access 选项需勾选，否则没有写入权限。
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="7、配置主机C（Git仓库机）"><a href="#7、配置主机C（Git仓库机）" class="headerlink" title="7、配置主机C（Git仓库机）"></a>7、配置主机C（Git仓库机）</h2><blockquote>
+<p>主机C：</p>
+</blockquote>
+<ul>
+<li><p>1、安装Git</p>
+<pre><code># 安装git
+yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
+
+yum install git
+
+# 创建一个git用户组和用户，用来运行git服务
+groupadd git
+
+adduser git -g git
+</code></pre></li>
+<li><p>2、配置Git</p>
+<pre><code>su - git # 切换至git用户
+cd /home/git/
+mkdir .ssh
+chmod 700 .ssh
+touch .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+# 将客户端（如：主机A）的公钥（cat ~/.ssh/id_rsa.pub）导入至authorized_keys文件中，一行一个。
+</code></pre></li>
+<li><p>3、创建项目</p>
+<pre><code>su  # 切换到root用户
+cd home
+mkdir gitrepo
+chown git:git gitrepo/
+cd gitrepo
+
+# 初始化
+git init --bare runoob.git 
+
+# 把仓库所属用户改为git
+chown -R git /home/gitrepo
+chgrp -R git /home/gitrepo
+
+# 对应的仓库地址
+git@192.168.50.50:/home/gitrepo/runoob.git
+</code></pre></li>
+</ul>
+<blockquote>
+<p>客户端机器克隆仓库</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git clone git@192.168.50.50:/home/gitrepo/runoob.git</div><div class="line">Cloning into &apos;runoob&apos;...</div><div class="line">warning: You appear to have cloned an empty repository.</div><div class="line">Checking connectivity... done.</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="OK！配置完成！"><a href="#OK！配置完成！" class="headerlink" title="OK！配置完成！"></a>OK！配置完成！</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.walle-web.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Walle&lt;/a&gt; 一个web部署系统工具，配置简单、功能完善、界面流畅、开箱即用！支持git、svn版本管理，支持
+    
+    </summary>
+    
+      <category term="Walle" scheme="http://flycorn.com/categories/Walle/"/>
+    
+    
+      <category term="Walle" scheme="http://flycorn.com/tags/Walle/"/>
+    
+  </entry>
   
   <entry>
     <title>搭建Jetbrains家族IDE授权服务器</title>
@@ -578,11 +772,11 @@ vim _config.yml
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
@@ -694,11 +888,11 @@ hexo  deploy
       <category term="Hexo" scheme="http://flycorn.com/categories/Hexo/"/>
     
     
+      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
+    
       <category term="Hexo" scheme="http://flycorn.com/tags/Hexo/"/>
     
       <category term="Github" scheme="http://flycorn.com/tags/Github/"/>
-    
-      <category term="Blog" scheme="http://flycorn.com/tags/Blog/"/>
     
   </entry>
   
