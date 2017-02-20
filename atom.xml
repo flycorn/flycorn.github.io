@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://flycorn.com/"/>
-  <updated>2017-02-16T05:38:44.000Z</updated>
+  <updated>2017-02-20T06:45:10.000Z</updated>
   <id>http://flycorn.com/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue.js 2.0记录02</title>
+    <link href="http://flycorn.com/2017/02/20/Vue-js-2-0%E8%AE%B0%E5%BD%9502/"/>
+    <id>http://flycorn.com/2017/02/20/Vue-js-2-0记录02/</id>
+    <published>2017-02-20T06:44:16.000Z</published>
+    <updated>2017-02-20T06:45:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p><strong>深入扩展[我的备忘录]SPA应用</strong></p>
+</blockquote>
+<h2 id="1、重构前台页面"><a href="#1、重构前台页面" class="headerlink" title="1、重构前台页面"></a>1、重构前台页面</h2><blockquote>
+<p>Vue2.0+Vuex+Vue-router+Webpack</p>
+</blockquote>
+<h2 id="2、搭建后台服务接口"><a href="#2、搭建后台服务接口" class="headerlink" title="2、搭建后台服务接口"></a>2、搭建后台服务接口</h2><blockquote>
+<p>Laravel+Dingo+Jwt</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1774338-ce17ca0082506682.gif?imageMogr2/auto-orient/strip" alt="效果展示"></p>
+<blockquote>
+<p>完整实现前后端完全分离的SPA应用。</p>
+</blockquote>
+<p><a href="https://github.com/flycorn/CodeLife/tree/master/frontBackSpa" target="_blank" rel="external">完整源码链接</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;深入扩展[我的备忘录]SPA应用&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;1、重构前台页面&quot;&gt;&lt;a href=&quot;#1、重构前台页面&quot; class=&quot;headerlink&quot; title=&quot;1、重构前台页面
+    
+    </summary>
+    
+      <category term="Vue" scheme="http://flycorn.com/categories/Vue/"/>
+    
+    
+      <category term="Vue" scheme="http://flycorn.com/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>Walle瓦力web部署系统搭建</title>
